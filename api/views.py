@@ -2,14 +2,14 @@
 # from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from .models import studentModel
-from .serializers import studentSerializer
+from .serializers import studentSerializer,employeeSerializer
 from rest_framework import status
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
+from employee.models import employeeModel
+from rest_framework.views import APIView
 
-from api import serializers
-
-# Create your views here.
+# from api import serializers
 
 @api_view (['GET','POST'])
 def studentsView(request):
@@ -41,3 +41,12 @@ def studentDetailView(request,pk):
     elif request.method == 'DELETE':
         student.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+
+#   EMPLOYEES
+
+class employeeView(APIView):
+    def get(self,request):
+        employees = employeeModel.objects.all()
+        serializers = employeeSerializer(employees,many=True)
+        return Response(serializers.data,status=status.HTTP_200_OK)
