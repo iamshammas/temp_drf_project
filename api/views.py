@@ -4,9 +4,11 @@ from .models import studentModel
 from .serializers import studentSerializer
 from rest_framework import serializers,status
 from rest_framework.response import Response
+from rest_framework.decorators import api_view
 
 # Create your views here.
 
+@api_view (['GET'])
 def studentsView(request):
     students = studentModel.objects.all()
     serializers = studentSerializer(students,many=True)
