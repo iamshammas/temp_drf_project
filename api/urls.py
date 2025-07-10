@@ -7,5 +7,6 @@ urlpatterns = [
     path('student/<int:pk>/',views.studentDetailView,name='studentDetailView'),
 
     # employee app
-    path('employee/',views.employeeView.as_view(),name='employeeView')
+    path('employee/',views.employeeView.as_view(),name='employeeView'),
+    path('employee/<int:pk>/',views.employeeDetailView.as_view(),name='employeeDetailView')
 ]

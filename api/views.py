@@ -29,8 +29,6 @@ def studentDetailView(request,pk):
     student = get_object_or_404(studentModel,pk=pk)
     if request.method == 'GET':
         serializers = studentSerializer(student)
-        print(student)
-        print(serializers.data)
         return Response(serializers.data,status=status.HTTP_200_OK)
     elif request.method == 'PUT':
         serializers = studentSerializer(student,request.data)
@@ -56,3 +54,9 @@ class employeeView(APIView):
             serializer.save()
             return Response(serializer.data,status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+class employeeDetailView(APIView):
+    def get(self,request,pk):
+        emp_detail = get_object_or_404(employeeModel,pk=pk)
+        serializer = employeeSerializer(emp_detail)
+        return Response(serializer.data,status=status.HTTP_200_OK)
