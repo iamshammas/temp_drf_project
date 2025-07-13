@@ -1,5 +1,6 @@
 # from django.http import JsonResponse
 # from django.shortcuts import render
+from gc import get_objects
 from django.shortcuts import get_object_or_404
 from .models import studentModel
 from .serializers import studentSerializer,employeeSerializer
@@ -56,7 +57,9 @@ class employeeView(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
     
 class employeeDetailView(APIView):
-    def get(self,request,pk):
+    def get_data(self,pk):
         emp_detail = get_object_or_404(employeeModel,pk=pk)
-        serializer = employeeSerializer(emp_detail)
+        return emp_detail
+    def get(self,request,pk):
+        serializer = employeeSerializer(self.get_data(pk))
         return Response(serializer.data,status=status.HTTP_200_OK)
