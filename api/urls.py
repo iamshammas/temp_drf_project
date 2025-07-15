@@ -8,5 +8,8 @@ urlpatterns = [
 
     # employee app
     path('employee/',views.employeeView.as_view(),name='employeeView'),
-    path('employee/<int:pk>/',views.employeeDetailView.as_view(),name='employeeDetailView')
+    path('employee/<int:pk>/',views.employeeDetailView.as_view(),name='employeeDetailView'),
+
+    # staff app
+    path('staff/',views.staffViews.as_view(),name='staffViews')
 ]

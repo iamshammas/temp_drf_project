@@ -1,14 +1,16 @@
 # from django.http import JsonResponse
 # from django.shortcuts import render
-from gc import get_objects
+# from gc import get_objects
 from django.shortcuts import get_object_or_404
 from .models import studentModel
-from .serializers import studentSerializer,employeeSerializer
-from rest_framework import status
+from .serializers import studentSerializer,employeeSerializer,staffSerializer
+from rest_framework import status,mixins,generics
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from employee.models import employeeModel
 from rest_framework.views import APIView
+from rest_framework.mixins import ListModelMixin,CreateModelMixin
+from staff.models import staffModel
 
 # from api import serializers
 
@@ -72,3 +74,14 @@ class employeeDetailView(APIView):
     def delete(self,request,pk):
         self.get_data(pk).delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+    
+    #STAFFS
+
+class staffViews(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
+    queryset = staffModel.objects.all()
+    serializer_class = staffSerializer
+
+    def get(self,request):
+        return self.list(request)
+    def post(self,request):
+        return self.create(request)
